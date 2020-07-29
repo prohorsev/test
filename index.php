@@ -1,26 +1,17 @@
 <?php
-function reverseWords($str) {
-    $valueOld = '';
-    $doubleSpaces = false;
-    foreach (str_split($str) as $key => $value){
-        if ($value === $valueOld && $value === ' '){
-            $doubleSpaces = true;
+
+function encrypt($text, $n)
+{
+    $arr = str_split($text);
+    $arrSecond = [];
+    $arrFirst = [];
+    foreach ($arr as $key => $value) {
+        if (($key % 2) == 0) {
+            array_push($arrFirst, $value);
+        } else {
+            array_push($arrSecond, $value);
         }
     }
-    $token = ' ';
-    if (substr_count($str, ' ') === 2) {
-        $token = '  ';
-    }
-    $tok = strtok ($str , $token);
-    $strNew = '';
-    while ($tok !== false) {
-        $strNew = $strNew . strrev($tok) . $token;
-        $tok = strtok($token);
-    }
-    if (substr_count($str, ' ') === 2){
-        return str_replace(' ', ' ' . '&nbsp;',  mb_substr($strNew, 0, -1));
-    }else{
-        return mb_substr($strNew, 0, -1);
-    }
+    return implode($arrSecond) . implode($arrFirst);
 }
-echo reverseWords("double  spaced  words");
+echo encrypt("This is a test!", 1);
